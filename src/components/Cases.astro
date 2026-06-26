@@ -27,8 +27,9 @@ const partners = [
 ];
 ---
 
-<section id="cases" class="py-20 bg-grafite text-areia">
-  <div class="max-w-6xl mx-auto px-6">
+<section id="cases" class="py-20 bg-grafite text-areia relative overflow-hidden">
+  <canvas id="cases-trail" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+  <div class="max-w-6xl mx-auto px-6 relative z-10">
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-5xl font-bold mb-4 font-space-grotesk">
         Cases e <span class="text-ambar">Parceiros</span>
@@ -102,3 +103,75 @@ const partners = [
     </div>
   </div>
 </section>
+
+<script>
+  function initCasesTrail() {
+    const canvas = document.getElementById('cases-trail') as HTMLCanvasElement;
+    const section = document.getElementById('cases');
+    if (!canvas || !section) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let points: { x: number; y: number; age: number }[] = [];
+    const maxAge = 80;
+
+    function resize() {
+      canvas.width = section.offsetWidth;
+      canvas.height = section.offsetHeight;
+    }
+
+    section.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = section.getBoundingClientRect();
+      points.push({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        age: 0
+      });
+    });
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      points.forEach(p => p.age++);
+      points = points.filter(p => p.age < maxAge);
+
+      if (points.length > 1) {
+        ctx.strokeStyle = '#EF9F27';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.setLineDash([4, 12]);
+
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+
+        for (let i = 1; i < points.length; i++) {
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+
+        ctx.globalAlpha = 1 - (points[points.length - 1].age / maxAge);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      if (points.length > 0) {
+        const last = points[points.length - 1];
+        ctx.beginPath();
+        ctx.arc(last.x, last.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#EF9F27';
+        ctx.globalAlpha = Math.max(0, 1 - (last.age / maxAge));
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    requestAnimationFrame(draw);
+  }
+
+  document.addEventListener('DOMContentLoaded', initCasesTrail);
+  document.addEventListener('astro:page-load', initCasesTrail);
+</script>

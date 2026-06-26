@@ -1,27 +1,116 @@
----
----
+<section id="hero" class="min-h-screen flex items-center justify-center bg-grafite text-areia px-6 py-20 overflow-hidden relative">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none space-bg"></div>
 
-<section class="min-h-screen flex items-center justify-center bg-grafite text-areia px-6 py-20">
-  <div class="max-w-4xl mx-auto text-center">
+  <canvas id="mouse-trail" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
+
+  <div class="max-w-4xl mx-auto text-center relative z-10">
     <h1 class="text-4xl md:text-6xl font-bold mb-6 font-space-grotesk leading-tight">
       Transformamos ideias em<br />
       <span class="text-ambar">soluções digitais</span> sob medida
     </h1>
-    
+
     <p class="text-lg md:text-xl text-areia/80 mb-10 max-w-2xl mx-auto font-helvetica leading-relaxed">
-      Somos especialistas em descobrir exatamente o que seu negócio precisa e propor 
+      Somos especialistas em descobrir exatamente o que seu negócio precisa e propor
       soluções que geram resultados reais. Na DYGO, sua confiança é nosso maior ativo.
     </p>
-    
+
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#contato" 
-         class="inline-block bg-ambar text-grafite font-semibold px-8 py-4 rounded-lg hover:bg-mel transition-colors duration-300 font-space-grotesk">
+      <a href="#contato" class="inline-block bg-ambar text-grafite font-semibold px-8 py-4 rounded-lg hover:bg-mel transition-colors duration-300 font-space-grotesk">
         Fale Conosco
       </a>
-      <a href="#processo" 
-         class="inline-block border-2 border-ambar text-ambar font-semibold px-8 py-4 rounded-lg hover:bg-ambar hover:text-grafite transition-colors duration-300 font-space-grotesk">
+      <a href="#processo" class="inline-block border-2 border-ambar text-ambar font-semibold px-8 py-4 rounded-lg hover:bg-ambar hover:text-grafite transition-colors duration-300 font-space-grotesk">
         Conheça Nosso Processo
       </a>
     </div>
   </div>
 </section>
+
+<script>
+  function initMouseTrail() {
+    const canvas = document.getElementById('mouse-trail') as HTMLCanvasElement;
+    const hero = document.getElementById('hero');
+    if (!canvas || !hero) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let points: { x: number; y: number; age: number }[] = [];
+    const maxAge = 80;
+
+    function resize() {
+      canvas.width = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+
+    hero.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = hero.getBoundingClientRect();
+      points.push({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        age: 0
+      });
+    });
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      points.forEach(p => p.age++);
+      points = points.filter(p => p.age < maxAge);
+
+      if (points.length > 1) {
+        ctx.strokeStyle = '#EF9F27';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.setLineDash([4, 12]);
+
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        
+        for (let i = 1; i < points.length; i++) {
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+        
+        ctx.globalAlpha = 1 - (points[points.length - 1].age / maxAge);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      if (points.length > 0) {
+        const last = points[points.length - 1];
+        ctx.beginPath();
+        ctx.arc(last.x, last.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#EF9F27';
+        ctx.globalAlpha = Math.max(0, 1 - (last.age / maxAge));
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    requestAnimationFrame(draw);
+  }
+
+  document.addEventListener('DOMContentLoaded', initMouseTrail);
+  document.addEventListener('astro:page-load', initMouseTrail);
+</script>
+
+<style>
+  /* Estrelas estáticas (sem a animação de piscar) */
+  .space-bg::before {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #FAC775;
+    opacity: 0.4; /* Opacidade fixa e sutil */
+    box-shadow: 
+      20vw 10vh 0 #FAC775, 45vw 15vh 0 #FAC775, 70vw 5vh 0 #FAC775, 85vw 18vh 0 #FAC775,
+      10vw 30vh 0 #FAC775, 35vw 25vh 0 #FAC775, 60vw 35vh 0 #FAC775, 90vw 28vh 0 #FAC775,
+      5vw 50vh 0 #FAC775, 25vw 55vh 0 #FAC775, 50vw 48vh 0 #FAC775, 75vw 60vh 0 #FAC775,
+      15vw 75vh 0 #FAC775, 40vw 70vh 0 #FAC775, 65vw 80vh 0 #FAC775, 80vw 85vh 0 #FAC775;
+  }
+</style>
