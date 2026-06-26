@@ -1,0 +1,255 @@
+---
+const steps = [
+  {
+    number: '01',
+    title: 'Descoberta',
+    description: 'Entendemos profundamente seu negócio, seus desafios e objetivos para identificar exatamente o que você precisa.'
+  },
+  {
+    number: '02',
+    title: 'Planejamento',
+    description: 'Desenvolvemos uma estratégia clara e um plano detalhado para alcançar seus resultados com eficiência.'
+  },
+  {
+    number: '03',
+    title: 'Desenvolvimento',
+    description: 'Construímos soluções sob medida com tecnologia de ponta, sempre alinhadas às suas necessidades.'
+  },
+  {
+    number: '04',
+    title: 'Entrega',
+    description: 'Implementamos, testamos e garantimos que tudo funcione perfeitamente para você.'
+  },
+  {
+    number: '05',
+    title: 'Suporte',
+    description: 'Continuamos ao seu lado com suporte contínuo e melhorias constantes para o sucesso do seu negócio.'
+  }
+];
+---
+
+<!-- DESKTOP: Horizontal scroll-linked carousel -->
+<section id="processo" class="hidden md:block bg-areia relative pt-8 pb-8" style="height: 250vh;">
+  <div id="process-sticky" class="sticky top-0 h-screen flex flex-col items-center overflow-hidden pt-26">
+    <!-- Heading -->
+    <div id="process-heading" class="text-center px-6 mb-6 transition-all duration-300">
+      <h2 class="text-3xl md:text-5xl font-bold text-grafite mb-4 font-space-grotesk">
+        Nosso Processo de<br />
+        <span class="text-ambar">Desenvolvimento</span>
+      </h2>
+      <p class="text-chumbo text-lg max-w-2xl mx-auto">
+        Um método comprovado para transformar suas ideias em soluções digitais de sucesso
+      </p>
+    </div>
+
+    <!-- Progress line with gaps -->
+    <div class="w-full max-w-6xl mb-4 px-8">
+      <div class="flex items-center gap-2">
+        {steps.map((_step, index) => (
+          <div class="flex-1 flex items-center gap-2">
+            <div class="relative flex-1 h-1 bg-chumbo/20 rounded-full">
+              <div class="process-segment absolute top-0 left-0 h-full bg-ambar rounded-full transition-none" style="width: 0%;" data-index={index}></div>
+            </div>
+            <div
+              class="h-process-dot w-4 h-4 rounded-full bg-chumbo/30 border-4 border-areia transition-all duration-300 relative z-10 flex-shrink-0"
+              data-index={index}
+            >
+              <div class="process-dot-glow absolute inset-0 bg-ambar rounded-full scale-0 transition-transform duration-300"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Cards track -->
+    <div class="w-full max-w-6xl overflow-hidden px-8">
+      <div id="process-track" class="flex gap-8 transition-none" style="transform: translateX(0);">
+        {steps.map((step, index) => (
+          <div
+            class="process-card flex-shrink-0 w-72 bg-white p-8 rounded-2xl shadow-lg opacity-40 transition-all duration-300"
+            data-index={index}
+          >
+            <span class="text-ambar/50 font-bold text-3xl font-space-grotesk step-number">{step.number}</span>
+            <h3 class="text-2xl font-bold text-grafite mt-3 mb-4 font-space-grotesk">{step.title}</h3>
+            <p class="text-chumbo text-lg leading-relaxed">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE: Vertical timeline -->
+<section id="processo-mobile" class="md:hidden pt-16 pb-20 bg-areia">
+  <div class="px-6">
+    <div class="text-center mb-6">
+      <h2 class="text-3xl font-bold text-grafite mb-4 font-space-grotesk">
+        Nosso Processo de <span class="text-ambar">Desenvolvimento</span>
+      </h2>
+      <p class="text-chumbo text-lg max-w-2xl mx-auto">
+        Um método comprovado para transformar suas ideias em soluções digitais de sucesso
+      </p>
+    </div>
+
+    <div class="relative">
+      <!-- Vertical line -->
+      <div class="absolute left-6 top-0 h-full w-0.5 bg-chumbo/20"></div>
+      <div id="mobile-progress" class="absolute left-6 top-0 w-0.5 bg-ambar transition-none" style="height: 0%;"></div>
+
+      <div class="space-y-8">
+        {steps.map((step, index) => (
+          <div class="process-step-mobile relative flex items-start gap-6 pl-14" data-index={index}>
+            <div class="absolute left-3.5 top-2 w-5 h-5 rounded-full bg-chumbo/30 border-4 border-areia step-dot-mobile transition-all duration-300">
+              <div class="absolute inset-0 bg-ambar rounded-full scale-0 transition-transform duration-300 glow-dot-mobile"></div>
+            </div>
+            <div class="step-card-mobile bg-white p-6 rounded-xl shadow-lg transition-all duration-300 opacity-40">
+              <span class="text-ambar/50 font-bold text-2xl font-space-grotesk step-number-mobile">{step.number}</span>
+              <h3 class="text-xl font-bold text-grafite mt-2 mb-3 font-space-grotesk">{step.title}</h3>
+              <p class="text-chumbo">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initDesktopCarousel() {
+    const section = document.getElementById('processo');
+    const sticky = document.getElementById('process-sticky');
+    const track = document.getElementById('process-track');
+    const heading = document.getElementById('process-heading');
+    const cards = document.querySelectorAll('.process-card');
+    const dots = document.querySelectorAll('.h-process-dot');
+    const segments = document.querySelectorAll('.process-segment');
+
+    if (!section || !sticky || !track || !cards.length || !dots.length) return;
+
+    const totalSteps = cards.length;
+
+    function update() {
+      if (!section || !sticky || !track || !track.parentElement || !heading) return;
+      const rect = section.getBoundingClientRect();
+      const scrollable = section.offsetHeight - window.innerHeight;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / scrollable));
+
+      // Move cards
+      const trackWidth = track.scrollWidth - track.parentElement.offsetWidth;
+      track.style.transform = `translateX(${-progress * trackWidth}px)`;
+
+      // Active card
+      const activeIndex = Math.min(
+        totalSteps - 1,
+        Math.floor(progress * totalSteps)
+      );
+
+      // Segmented progress
+      segments.forEach((segment, i) => {
+        const segmentProgress = Math.max(0, Math.min(1, (progress * totalSteps) - i));
+        (segment as HTMLElement).style.width = `${segmentProgress * 100}%`;
+      });
+
+      cards.forEach((card, i) => {
+        const isActive = i === activeIndex;
+        card.classList.toggle('opacity-100', isActive);
+        card.classList.toggle('opacity-40', !isActive);
+        card.classList.toggle('shadow-xl', isActive);
+        card.classList.toggle('shadow-lg', !isActive);
+
+        const num = card.querySelector('.step-number');
+        num?.classList.toggle('text-ambar', isActive);
+        num?.classList.toggle('text-ambar/50', !isActive);
+      });
+
+      dots.forEach((dot, i) => {
+        const isActive = i <= activeIndex;
+        const glow = dot.querySelector('.process-dot-glow');
+        dot.classList.toggle('bg-ambar', isActive);
+        dot.classList.toggle('bg-chumbo/30', !isActive);
+        dot.classList.toggle('scale-125', i === activeIndex);
+        glow?.classList.toggle('scale-100', isActive);
+        glow?.classList.toggle('scale-0', !isActive);
+      });
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  function initMobileCarousel() {
+    const section = document.getElementById('processo-mobile');
+    const steps = document.querySelectorAll('.process-step-mobile');
+    const mobileProgress = document.getElementById('mobile-progress');
+
+    if (!section || !steps.length || !mobileProgress) return;
+
+    function updateMobile() {
+      if (!section || !mobileProgress) return;
+      const rect = section.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / scrollable));
+      mobileProgress.style.height = `${progress * 100}%`;
+
+      const viewportCenter = window.innerHeight / 2;
+
+      steps.forEach((step) => {
+        const stepRect = step.getBoundingClientRect();
+        const stepCenter = stepRect.top + stepRect.height / 2;
+        const distance = Math.abs(stepCenter - viewportCenter);
+        const maxDistance = window.innerHeight;
+        const isActive = distance < maxDistance * 0.4;
+
+        const card = step.querySelector('.step-card-mobile');
+        const dot = step.querySelector('.step-dot-mobile');
+        const glow = step.querySelector('.glow-dot-mobile');
+        const num = step.querySelector('.step-number-mobile');
+
+        card?.classList.toggle('opacity-100', isActive);
+        card?.classList.toggle('opacity-40', !isActive);
+        card?.classList.toggle('shadow-xl', isActive);
+        dot?.classList.toggle('bg-ambar', isActive);
+        dot?.classList.toggle('bg-chumbo/30', !isActive);
+        dot?.classList.toggle('scale-125', isActive);
+        glow?.classList.toggle('scale-100', isActive);
+        glow?.classList.toggle('scale-0', !isActive);
+        num?.classList.toggle('text-ambar', isActive);
+        num?.classList.toggle('text-ambar/50', !isActive);
+      });
+    }
+
+    window.addEventListener('scroll', updateMobile, { passive: true });
+    updateMobile();
+  }
+
+  function initAll() {
+    if (window.innerWidth >= 768) {
+      initDesktopCarousel();
+    } else {
+      initMobileCarousel();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initAll);
+  document.addEventListener('astro:page-load', initAll);
+</script>
+
+<style>
+  .process-card {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  .process-card.opacity-100 {
+    transform: scale(1.02);
+  }
+
+  .process-dot-glow {
+    box-shadow: 0 0 12px rgba(239, 159, 39, 0.6);
+  }
+
+  .glow-dot-mobile {
+    box-shadow: 0 0 12px rgba(239, 159, 39, 0.6);
+  }
+</style>

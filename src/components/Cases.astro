@@ -1,0 +1,104 @@
+---
+const cases = [
+  {
+    client: 'Valiant Group do Brasil',
+    type: 'Parceiro Principal',
+    description: 'Transformação digital completa com integração de sistemas e otimização de processos.',
+    year: '2024'
+  }
+];
+
+const partners = [
+  {
+    name: 'Parceiro 1',
+    connection: 'Valiant Group do Brasil',
+    description: 'Conexão através do Valiant Group'
+  },
+  {
+    name: 'Parceiro 2',
+    connection: 'Valiant Group do Brasil',
+    description: 'Conexão através do Valiant Group'
+  },
+  {
+    name: 'Parceiro 3',
+    connection: 'Valiant Group do Brasil',
+    description: 'Conexão através do Valiant Group'
+  }
+];
+---
+
+<section id="cases" class="py-20 bg-grafite text-areia">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold mb-4 font-space-grotesk">
+        Cases e <span class="text-ambar">Parceiros</span>
+      </h2>
+      <p class="text-areia/70 text-lg max-w-2xl mx-auto">
+        Conheça nossos cases de sucesso e parceiros estratégicos
+      </p>
+    </div>
+
+    <!-- Featured Case -->
+    <div class="mb-16">
+      <div class="bg-chumbo rounded-2xl p-8 md:p-12 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-ambar/10 rounded-full -mr-16 -mt-16"></div>
+        <div class="relative z-10">
+          <div class="flex items-center gap-4 mb-6">
+            <span class="bg-ambar text-grafite px-4 py-2 rounded-full text-sm font-semibold font-space-grotesk">
+              {cases[0].type}
+            </span>
+            <span class="text-areia/50 text-sm">{cases[0].year}</span>
+          </div>
+          <h3 class="text-2xl md:text-4xl font-bold mb-4 font-space-grotesk">{cases[0].client}</h3>
+          <p class="text-areia/80 text-lg max-w-3xl">{cases[0].description}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Partners Network -->
+    <div class="relative">
+      <h3 class="text-2xl font-bold mb-8 text-center font-space-grotesk">
+        Rede de <span class="text-ambar">Parceiros</span>
+      </h3>
+
+      <!-- Connection visualization -->
+      <div class="relative h-64 flex items-center justify-center">
+        <!-- Center node - Valiant Group -->
+        <div class="absolute z-20 bg-ambar text-grafite px-6 py-4 rounded-xl font-bold font-space-grotesk shadow-lg">
+          Valiant Group do Brasil
+        </div>
+
+        <!-- Connection lines -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 10;">
+          <!-- Line to partner 1 (top left) -->
+          <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
+          <!-- Line to partner 2 (top right) -->
+          <line x1="50%" y1="50%" x2="80%" y2="20%" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
+          <!-- Line to partner 3 (bottom) -->
+          <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
+        </svg>
+
+        <!-- Partner nodes -->
+        <div class="absolute top-4 left-4 md:left-20 z-20 bg-chumbo text-areia px-4 py-3 rounded-lg font-space-grotesk">
+          {partners[0].name}
+        </div>
+        <div class="absolute top-4 right-4 md:right-20 z-20 bg-chumbo text-areia px-4 py-3 rounded-lg font-space-grotesk">
+          {partners[1].name}
+        </div>
+        <div class="absolute bottom-4 z-20 bg-chumbo text-areia px-4 py-3 rounded-lg font-space-grotesk">
+          {partners[2].name}
+        </div>
+      </div>
+
+      <!-- Partner descriptions -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+        {partners.map((partner) => (
+          <div class="bg-chumbo/50 p-6 rounded-xl text-center">
+            <h4 class="font-bold text-ambar mb-2 font-space-grotesk">{partner.name}</h4>
+            <p class="text-areia/70 text-sm">{partner.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

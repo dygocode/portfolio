@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-grafite: #2C2C2A;
+  --color-chumbo: #444441;
+  --color-ambar: #EF9F27;
+  --color-mel: #FAC775;
+  --color-areia: #F1EFE8;
+  
+  --font-helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-areia);
+  color: var(--color-grafite);
+  font-family: var(--font-helvetica);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-space-grotesk);
+}
+
+.font-space-grotesk {
+  font-family: var(--font-space-grotesk);
+}
+
+.font-helvetica {
+  font-family: var(--font-helvetica);
+}
