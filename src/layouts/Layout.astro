@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
+import WhatsApp from '../components/WhatsApp.astro';
 
 interface Props {
 	title: string;
@@ -49,5 +50,6 @@ const { title, description = 'DYGO Sistemas Digitais - Transformamos ideias em s
 		<Navbar />
 		<div class="h-16 md:h-20"></div>
 		<slot />
+		<WhatsApp />
 	</body>
 </html>
