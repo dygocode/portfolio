@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#2C2C2A"/>
+      <stop offset="100%" style="stop-color:#3A3A38"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#EF9F27"/>
+      <stop offset="100%" style="stop-color:#FAC775"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Shield / security shape -->
+  <g transform="translate(920, 150)" opacity="0.12">
+    <path d="M0 80 L60 0 L120 80 L120 160 Q120 240 60 280 Q0 240 0 160 Z" fill="#EF9F27" stroke="#EF9F27" stroke-width="2"/>
+    <path d="M30 120 L50 140 L90 100" fill="none" stroke="#F1EFE8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle cx="180" cy="520" r="160" fill="#EF9F27" opacity="0.04"/>
+  <!-- Lock pattern -->
+  <g fill="none" stroke="#FAC775" stroke-width="1" opacity="0.1">
+    <rect x="880" y="400" width="40" height="50" rx="4"/>
+    <path d="M890 400 L890 385 Q900 370 910 385 L910 400"/>
+    <circle cx="900" cy="422" r="4"/>
+  </g>
+  <!-- Category badge -->
+  <rect x="80" y="180" width="170" height="36" rx="18" fill="#EF9F27" opacity="0.15"/>
+  <text x="165" y="204" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#EF9F27" text-anchor="middle">SEGURANÇA</text>
+  <!-- Title -->
+  <text x="80" y="280" font-family="Helvetica, Arial, sans-serif" font-size="44" font-weight="700" fill="#F1EFE8">
+    <tspan x="80" dy="0">Segurança</tspan>
+    <tspan x="80" dy="58">cibernética para</tspan>
+    <tspan x="80" dy="58">startups: guia</tspan>
+    <tspan x="80" dy="58">essencial</tspan>
+  </text>
+  <rect x="80" y="540" width="80" height="4" rx="2" fill="url(#accent)"/>
+  <text x="80" y="580" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#FAC775" opacity="0.6">DYGO Sistemas Digitais</text>
+</svg>

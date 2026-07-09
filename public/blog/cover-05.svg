@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2C2C2A"/>
+      <stop offset="50%" style="stop-color:#3A3A38"/>
+      <stop offset="100%" style="stop-color:#444441"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#EF9F27"/>
+      <stop offset="100%" style="stop-color:#FAC775"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Wireframe / design elements -->
+  <g stroke="#EF9F27" fill="none" opacity="0.12" stroke-width="2">
+    <!-- Browser window -->
+    <rect x="850" y="100" width="300" height="200" rx="8"/>
+    <line x1="850" y1="130" x2="1150" y2="130"/>
+    <circle cx="870" cy="115" r="5"/><circle cx="886" cy="115" r="5"/><circle cx="902" cy="115" r="5"/>
+    <!-- Content blocks -->
+    <rect x="870" y="145" width="260" height="12" rx="2" opacity="0.3"/>
+    <rect x="870" y="165" width="180" height="12" rx="2" opacity="0.3"/>
+    <rect x="870" y="195" width="120" height="30" rx="4"/>
+  </g>
+  <!-- Cursor icon -->
+  <g transform="translate(1000, 350)" opacity="0.2">
+    <path d="M0 0 L0 28 L8 20 L16 32 L20 30 L12 18 L22 18 Z" fill="#FAC775"/>
+  </g>
+  <circle cx="150" cy="500" r="180" fill="#FAC775" opacity="0.04"/>
+  <!-- Category badge -->
+  <rect x="80" y="180" width="130" height="36" rx="18" fill="#EF9F27" opacity="0.15"/>
+  <text x="145" y="204" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#EF9F27" text-anchor="middle">DESIGN</text>
+  <!-- Title -->
+  <text x="80" y="280" font-family="Helvetica, Arial, sans-serif" font-size="44" font-weight="700" fill="#F1EFE8">
+    <tspan x="80" dy="0">Design UX que</tspan>
+    <tspan x="80" dy="58">converte: por que</tspan>
+    <tspan x="80" dy="58">a experiência do</tspan>
+    <tspan x="80" dy="58">usuário importa</tspan>
+  </text>
+  <rect x="80" y="540" width="80" height="4" rx="2" fill="url(#accent)"/>
+  <text x="80" y="580" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#FAC775" opacity="0.6">DYGO Sistemas Digitais</text>
+</svg>

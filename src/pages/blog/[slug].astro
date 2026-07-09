@@ -1,0 +1,116 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+
+interface Post {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  category: string;
+  author: string;
+  coverImage: string;
+  readTime: string;
+  content: string;
+}
+
+export async function getStaticPaths() {
+  const postFiles = import.meta.glob('../../data/blog/*.json', { eager: true });
+
+  const paths = Object.values(postFiles).map((mod: any) => {
+    const post: Post = mod.default || mod;
+    return { params: { slug: post.slug } };
+  });
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+
+const postFiles = import.meta.glob('../../data/blog/*.json', { eager: true });
+let post: Post | null = null;
+
+for (const mod of Object.values(postFiles)) {
+  const data: Post = (mod as any).default || (mod as any);
+  if (data.slug === slug) {
+    post = data;
+    break;
+  }
+}
+
+if (!post) {
+  return Astro.redirect('/blog');
+}
+
+function formatDate(dateStr: string): string {
+  return new Date(dateStr + 'T00:00:00').toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
+function markdownToHtml(md: string): string {
+  let html = md
+    .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-bold font-space-grotesk text-ambar mt-10 mb-4">$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3 class="text-xl font-semibold font-space-grotesk text-areia mt-8 mb-3">$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="text-areia font-semibold">$1</strong>')
+    .replace(/^- (.+)$/gm, '<li class="text-areia/80 font-helvetica leading-relaxed ml-4 mb-2 list-disc">$1</li>')
+    .replace(/^(\d+)\. (.+)$/gm, '<li class="text-areia/80 font-helvetica leading-relaxed ml-4 mb-2 list-decimal">$2</li>')
+    .replace(/\n\n/g, '</p><p class="text-areia/80 font-helvetica leading-relaxed mb-4">')
+    .replace(/\n/g, '<br />');
+
+  return `<p class="text-areia/80 font-helvetica leading-relaxed mb-4">${html}</p>`;
+}
+---
+
+<Layout title={`${post.title} | Blog DYGO`} description={post.excerpt}>
+  <main class="bg-grafite min-h-screen text-areia">
+    <!-- Back link -->
+    <div class="pt-24 pb-4 px-6">
+      <div class="max-w-3xl mx-auto">
+        <a href="/blog" class="text-sm text-ambar hover:text-mel transition-colors font-space-grotesk inline-flex items-center gap-2">
+          ← Voltar ao Blog
+        </a>
+      </div>
+    </div>
+
+    <!-- Article -->
+    <article class="pb-24 px-6">
+      <div class="max-w-3xl mx-auto">
+        <!-- Cover -->
+        <div class="aspect-video bg-chumbo/30 rounded-xl overflow-hidden mb-8">
+          <img src={post.coverImage} alt={post.title} class="w-full h-full object-cover" />
+        </div>
+
+        <!-- Meta -->
+        <div class="flex items-center gap-3 mb-6">
+          <span class="text-xs font-semibold text-ambar bg-ambar/10 px-3 py-1 rounded-full font-space-grotesk">
+            {post.category}
+          </span>
+          <span class="text-xs text-areia/50 font-helvetica">
+            {post.readTime} de leitura
+          </span>
+          <time class="text-xs text-areia/40 font-helvetica">
+            {formatDate(post.date)}
+          </time>
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-3xl md:text-4xl font-bold font-space-grotesk mb-6 leading-tight">
+          {post.title}
+        </h1>
+
+        <!-- Author -->
+        <p class="text-sm text-areia/50 font-helvetica mb-10 pb-10 border-b border-chumbo/20">
+          Por <span class="text-ambar">{post.author}</span>
+        </p>
+
+        <!-- Content -->
+        <div class="prose-dygo" set:html={markdownToHtml(post.content)} />
+      </div>
+    </article>
+
+    <Footer />
+  </main>
+</Layout>
