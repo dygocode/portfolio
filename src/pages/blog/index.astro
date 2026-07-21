@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SEO from '../../components/SEO.astro';
 import Footer from '../../components/Footer.astro';
 
 interface Post {
@@ -25,9 +26,18 @@ function formatDate(dateStr: string): string {
     year: 'numeric',
   });
 }
+
+const title = 'Blog | DYGO Sistemas Digitais';
+const description = 'Artigos sobre desenvolvimento de software, tecnologia, processos ágeis e inovação digital pela DYGO Sistemas Digitais.';
 ---
 
-<Layout title="Blog | DYGO Sistemas Digitais" description="Artigos sobre desenvolvimento de software, tecnologia, processos ágeis e inovação digital pela DYGO Sistemas Digitais.">
+<Layout title={title} description={description}>
+  <SEO slot="head" title={title} description={description} jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: title,
+    description: description,
+  }} />
   <main class="bg-grafite min-h-screen text-areia">
     <!-- Header -->
     <section class="pt-28 pb-16 px-6">
