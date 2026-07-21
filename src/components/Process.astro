@@ -66,10 +66,10 @@ const steps = [
       <div id="process-track" class="flex gap-8 transition-none" style="transform: translateX(0);">
         {steps.map((step, index) => (
           <div
-            class="process-card flex-shrink-0 w-72 bg-white p-8 rounded-2xl shadow-lg opacity-40 transition-all duration-300"
+            class="process-card flex-shrink-0 w-72 bg-white p-8 rounded-2xl shadow-lg opacity-60 transition-all duration-300"
             data-index={index}
           >
-            <span class="text-ambar/80 font-bold text-3xl font-space-grotesk step-number">{step.number}</span>
+            <span class="text-ambar font-bold text-3xl font-space-grotesk step-number">{step.number}</span>
             <h3 class="text-2xl font-bold text-grafite mt-3 mb-4 font-space-grotesk">{step.title}</h3>
             <p class="text-chumbo text-lg leading-relaxed">{step.description}</p>
           </div>
@@ -102,8 +102,8 @@ const steps = [
             <div class="absolute left-3.5 top-2 w-5 h-5 rounded-full bg-chumbo/30 border-4 border-areia step-dot-mobile transition-all duration-300">
               <div class="absolute inset-0 bg-ambar rounded-full scale-0 transition-transform duration-300 glow-dot-mobile"></div>
             </div>
-            <div class="step-card-mobile bg-white p-6 rounded-xl shadow-lg transition-all duration-300 opacity-40">
-              <span class="text-ambar/80 font-bold text-2xl font-space-grotesk step-number-mobile">{step.number}</span>
+            <div class="step-card-mobile bg-white p-6 rounded-xl shadow-lg transition-all duration-300 opacity-60">
+              <span class="text-ambar font-bold text-2xl font-space-grotesk step-number-mobile">{step.number}</span>
               <h3 class="text-xl font-bold text-grafite mt-2 mb-3 font-space-grotesk">{step.title}</h3>
               <p class="text-chumbo">{step.description}</p>
             </div>
@@ -154,13 +154,13 @@ const steps = [
       cards.forEach((card, i) => {
         const isActive = i === activeIndex;
         card.classList.toggle('opacity-100', isActive);
-        card.classList.toggle('opacity-40', !isActive);
+        card.classList.toggle('opacity-60', !isActive);
         card.classList.toggle('shadow-xl', isActive);
         card.classList.toggle('shadow-lg', !isActive);
 
         const num = card.querySelector('.step-number');
         num?.classList.toggle('text-ambar', isActive);
-        num?.classList.toggle('text-ambar/50', !isActive);
+        num?.classList.toggle('text-ambar', !isActive);
       });
 
       dots.forEach((dot, i) => {
@@ -208,7 +208,7 @@ const steps = [
         const num = step.querySelector('.step-number-mobile');
 
         card?.classList.toggle('opacity-100', isActive);
-        card?.classList.toggle('opacity-40', !isActive);
+        card?.classList.toggle('opacity-60', !isActive);
         card?.classList.toggle('shadow-xl', isActive);
         dot?.classList.toggle('bg-ambar', isActive);
         dot?.classList.toggle('bg-chumbo/30', !isActive);
@@ -216,7 +216,7 @@ const steps = [
         glow?.classList.toggle('scale-100', isActive);
         glow?.classList.toggle('scale-0', !isActive);
         num?.classList.toggle('text-ambar', isActive);
-        num?.classList.toggle('text-ambar/50', !isActive);
+        num?.classList.toggle('text-ambar', !isActive);
       });
     }
 
