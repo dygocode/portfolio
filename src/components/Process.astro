@@ -69,7 +69,7 @@ const steps = [
             class="process-card flex-shrink-0 w-72 bg-white p-8 rounded-2xl shadow-lg opacity-40 transition-all duration-300"
             data-index={index}
           >
-            <span class="text-ambar/50 font-bold text-3xl font-space-grotesk step-number">{step.number}</span>
+            <span class="text-ambar font-bold text-3xl font-space-grotesk step-number">{step.number}</span>
             <h3 class="text-2xl font-bold text-grafite mt-3 mb-4 font-space-grotesk">{step.title}</h3>
             <p class="text-chumbo text-lg leading-relaxed">{step.description}</p>
           </div>
@@ -103,7 +103,7 @@ const steps = [
               <div class="absolute inset-0 bg-ambar rounded-full scale-0 transition-transform duration-300 glow-dot-mobile"></div>
             </div>
             <div class="step-card-mobile bg-white p-6 rounded-xl shadow-lg transition-all duration-300 opacity-40">
-              <span class="text-ambar/50 font-bold text-2xl font-space-grotesk step-number-mobile">{step.number}</span>
+              <span class="text-ambar font-bold text-2xl font-space-grotesk step-number-mobile">{step.number}</span>
               <h3 class="text-xl font-bold text-grafite mt-2 mb-3 font-space-grotesk">{step.title}</h3>
               <p class="text-chumbo">{step.description}</p>
             </div>
@@ -246,10 +246,10 @@ const steps = [
   }
 
   .process-dot-glow {
-    box-shadow: 0 0 12px rgba(239, 159, 39, 0.6);
+    box-shadow: 0 0 12px rgba(179, 107, 0, 0.6);
   }
 
   .glow-dot-mobile {
-    box-shadow: 0 0 12px rgba(239, 159, 39, 0.6);
+    box-shadow: 0 0 12px rgba(179, 107, 0, 0.6);
   }
 </style>

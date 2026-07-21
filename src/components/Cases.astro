@@ -48,7 +48,7 @@ const partners = [
             <span class="bg-ambar text-grafite px-4 py-2 rounded-full text-sm font-semibold font-space-grotesk">
               {cases[0].type}
             </span>
-            <span class="text-areia/50 text-sm">{cases[0].year}</span>
+            <span class="text-areia/80 text-sm">{cases[0].year}</span>
           </div>
           <h3 class="text-2xl md:text-4xl font-bold mb-4 font-space-grotesk">{cases[0].client}</h3>
           <p class="text-areia/80 text-lg max-w-3xl">{cases[0].description}</p>
@@ -72,11 +72,11 @@ const partners = [
         <!-- Connection lines -->
         <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 10;">
           <!-- Line to partner 1 (top left) -->
-          <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
+          <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="#b36b00" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
           <!-- Line to partner 2 (top right) -->
-          <line x1="50%" y1="50%" x2="80%" y2="20%" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
+          <line x1="50%" y1="50%" x2="80%" y2="20%" stroke="#b36b00" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
           <!-- Line to partner 3 (bottom) -->
-          <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
+          <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#b36b00" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
         </svg>
 
         <!-- Partner nodes -->
@@ -96,7 +96,7 @@ const partners = [
         {partners.map((partner) => (
           <div class="bg-chumbo/50 p-6 rounded-xl text-center">
             <h4 class="font-bold text-ambar mb-2 font-space-grotesk">{partner.name}</h4>
-            <p class="text-areia/70 text-sm">{partner.description}</p>
+            <p class="text-areia text-sm">{partner.description}</p>
           </div>
         ))}
       </div>
@@ -137,7 +137,7 @@ const partners = [
       points = points.filter(p => p.age < maxAge);
 
       if (points.length > 1) {
-        ctx.strokeStyle = '#EF9F27';
+        ctx.strokeStyle = '#b36b00';
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
         ctx.setLineDash([4, 12]);
@@ -158,7 +158,7 @@ const partners = [
         const last = points[points.length - 1];
         ctx.beginPath();
         ctx.arc(last.x, last.y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = '#EF9F27';
+        ctx.fillStyle = '#b36b00';
         ctx.globalAlpha = Math.max(0, 1 - (last.age / maxAge));
         ctx.fill();
       }
