@@ -28,6 +28,15 @@ const { title, description = 'DYGO Sistemas Digitais - Transformamos ideias em s
 		<meta name="author" content="DYGO Sistemas Digitais" />
 		<meta name="robots" content="index, follow" />
 
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-WDVDLQM56R"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-WDVDLQM56R');
+		</script>
+
 		<slot name="head" />
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
