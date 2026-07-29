@@ -11,167 +11,100 @@ const cases = [
 const partners = [
   {
     name: 'Parceiro 1',
-    connection: 'Valiant Group do Brasil',
     description: 'Conexão através do Valiant Group'
   },
   {
     name: 'Parceiro 2',
-    connection: 'Valiant Group do Brasil',
     description: 'Conexão através do Valiant Group'
   },
   {
     name: 'Parceiro 3',
-    connection: 'Valiant Group do Brasil',
     description: 'Conexão através do Valiant Group'
   }
 ];
+
+const featuredCase = cases[0];
 ---
 
-<section id="cases" class="py-20 bg-grafite text-areia relative overflow-hidden">
-  <canvas id="cases-trail" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
-  <div class="max-w-6xl mx-auto px-6 relative z-10">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-5xl font-bold mb-4 font-space-grotesk">
-        Cases e <span class="text-ambar">Parceiros</span>
-      </h2>
-      <p class="text-areia/70 text-lg max-w-2xl mx-auto">
-        Conheça nossos cases de sucesso e parceiros estratégicos
+<section id="cases" class="py-20 md:py-24 bg-grafite text-areia">
+  <div class="max-w-6xl mx-auto px-6">
+    <header class="section-heading grid gap-5 mb-14 md:mb-20">
+      <p class="text-ambar text-xs font-semibold tracking-[0.2em] uppercase font-space-grotesk">
+        Trabalho e colaboração
       </p>
-    </div>
+      <div class="grid gap-5 md:grid-cols-2 md:items-end md:gap-12">
+        <h2 class="text-3xl md:text-5xl font-bold font-space-grotesk leading-tight">
+          Cases e <span class="text-ambar">Parceiros</span>
+        </h2>
+        <p class="text-areia/70 text-lg leading-relaxed md:max-w-lg md:justify-self-end">
+          Conheça nossos cases de sucesso e parceiros estratégicos
+        </p>
+      </div>
+    </header>
 
-    <!-- Featured Case -->
-    <div class="mb-16">
-      <div class="bg-chumbo rounded-2xl p-8 md:p-12 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-ambar/10 rounded-full -mr-16 -mt-16"></div>
-        <div class="relative z-10">
-          <div class="flex items-center gap-4 mb-6">
-            <span class="bg-ambar text-grafite px-4 py-2 rounded-full text-sm font-semibold font-space-grotesk">
-              {cases[0].type}
+    <article class="featured-case border-y border-areia/20 py-8 md:py-12">
+      <div class="case-layout grid gap-6 md:gap-10">
+        <div class="flex items-start justify-between gap-6 md:block">
+          <p class="text-ambar text-xs font-semibold tracking-[0.18em] uppercase font-space-grotesk">
+            Case em destaque
+          </p>
+          <span class="text-areia/60 text-sm font-space-grotesk md:block md:mt-5">01 / {featuredCase.year}</span>
+        </div>
+
+        <div>
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-5">
+            <span class="text-areia/65 text-sm font-space-grotesk">{featuredCase.type}</span>
+            <span class="w-8 h-px bg-ambar" aria-hidden="true"></span>
+            <span class="text-areia/65 text-sm font-space-grotesk">Transformação digital</span>
+          </div>
+          <h3 class="text-3xl md:text-5xl font-bold mb-5 font-space-grotesk leading-tight">
+            {featuredCase.client}
+          </h3>
+          <p class="text-areia/80 text-lg md:text-xl leading-relaxed max-w-3xl">
+            {featuredCase.description}
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <div class="mt-16 md:mt-20">
+      <div class="flex items-end justify-between gap-6 mb-6">
+        <div>
+          <p class="text-ambar text-xs font-semibold tracking-[0.18em] uppercase mb-3 font-space-grotesk">
+            Diretório
+          </p>
+          <h3 class="text-2xl md:text-3xl font-bold font-space-grotesk">Parceiros estratégicos</h3>
+        </div>
+        <p class="hidden sm:block text-areia/60 text-sm font-space-grotesk">
+          {String(partners.length).padStart(2, '0')} relações ativas
+        </p>
+      </div>
+
+      <ol class="partner-directory border-t border-areia/20">
+        {partners.map((partner, index) => (
+          <li class="partner-row grid gap-3 py-6 md:py-7 border-b border-areia/20 md:items-center">
+            <span class="text-ambar text-sm font-space-grotesk" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
             </span>
-            <span class="text-areia/70 text-sm">{cases[0].year}</span>
-          </div>
-          <h3 class="text-2xl md:text-4xl font-bold mb-4 font-space-grotesk">{cases[0].client}</h3>
-          <p class="text-areia/80 text-lg max-w-3xl">{cases[0].description}</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Partners Network -->
-    <div class="relative">
-      <h3 class="text-2xl font-bold mb-8 text-center font-space-grotesk">
-        Rede de <span class="text-ambar">Parceiros</span>
-      </h3>
-
-      <!-- Connection visualization -->
-      <div class="relative h-64 flex items-center justify-center">
-        <!-- Center node - Valiant Group -->
-        <div class="absolute z-20 bg-ambar text-grafite px-6 py-4 rounded-xl font-bold font-space-grotesk shadow-lg">
-          Valiant Group do Brasil
-        </div>
-
-        <!-- Connection lines -->
-        <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 10;">
-          <!-- Line to partner 1 (top left) -->
-          <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
-          <!-- Line to partner 2 (top right) -->
-          <line x1="50%" y1="50%" x2="80%" y2="20%" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
-          <!-- Line to partner 3 (bottom) -->
-          <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#EF9F27" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse" />
-        </svg>
-
-        <!-- Partner nodes -->
-        <div class="absolute top-4 left-4 md:left-20 z-20 bg-chumbo text-areia px-4 py-3 rounded-lg font-space-grotesk">
-          {partners[0].name}
-        </div>
-        <div class="absolute top-4 right-4 md:right-20 z-20 bg-chumbo text-areia px-4 py-3 rounded-lg font-space-grotesk">
-          {partners[1].name}
-        </div>
-        <div class="absolute bottom-4 z-20 bg-chumbo text-areia px-4 py-3 rounded-lg font-space-grotesk">
-          {partners[2].name}
-        </div>
-      </div>
-
-      <!-- Partner descriptions -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-        {partners.map((partner) => (
-          <div class="bg-chumbo/50 p-6 rounded-xl text-center">
-            <h3 class="font-bold text-ambar mb-2 font-space-grotesk">{partner.name}</h3>
-            <p class="text-areia/80 text-sm">{partner.description}</p>
-          </div>
+            <h4 class="text-xl md:text-2xl font-bold font-space-grotesk">{partner.name}</h4>
+            <span class="text-areia/65 text-sm font-space-grotesk">Parceiro estratégico</span>
+            <p class="text-areia/75 leading-relaxed md:text-right">{partner.description}</p>
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
   </div>
 </section>
 
-<script>
-  function initCasesTrail() {
-    const canvas = document.getElementById('cases-trail') as HTMLCanvasElement;
-    const section = document.getElementById('cases');
-    if (!canvas || !section) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let points: { x: number; y: number; age: number }[] = [];
-    const maxAge = 80;
-
-    function resize() {
-      canvas.width = section.offsetWidth;
-      canvas.height = section.offsetHeight;
+<style>
+  @media (min-width: 768px) {
+    .case-layout {
+      grid-template-columns: minmax(9rem, 0.3fr) minmax(0, 1fr);
     }
 
-    section.addEventListener('mousemove', (e: MouseEvent) => {
-      const rect = section.getBoundingClientRect();
-      points.push({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        age: 0
-      });
-    });
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      points.forEach(p => p.age++);
-      points = points.filter(p => p.age < maxAge);
-
-      if (points.length > 1) {
-        ctx.strokeStyle = '#EF9F27';
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.setLineDash([4, 12]);
-
-        ctx.beginPath();
-        ctx.moveTo(points[0].x, points[0].y);
-
-        for (let i = 1; i < points.length; i++) {
-          ctx.lineTo(points[i].x, points[i].y);
-        }
-
-        ctx.globalAlpha = 1 - (points[points.length - 1].age / maxAge);
-        ctx.stroke();
-        ctx.setLineDash([]);
-      }
-
-      if (points.length > 0) {
-        const last = points[points.length - 1];
-        ctx.beginPath();
-        ctx.arc(last.x, last.y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = '#EF9F27';
-        ctx.globalAlpha = Math.max(0, 1 - (last.age / maxAge));
-        ctx.fill();
-      }
-
-      ctx.globalAlpha = 1;
-      requestAnimationFrame(draw);
+    .partner-row {
+      grid-template-columns: 3rem minmax(9rem, 0.8fr) minmax(8rem, 0.65fr) minmax(12rem, 1fr);
+      column-gap: 2rem;
     }
-
-    resize();
-    window.addEventListener('resize', resize);
-    requestAnimationFrame(draw);
   }
-
-  document.addEventListener('DOMContentLoaded', initCasesTrail);
-  document.addEventListener('astro:page-load', initCasesTrail);
-</script>
+</style>

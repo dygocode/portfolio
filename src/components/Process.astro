@@ -33,7 +33,7 @@ const steps = [
   <div id="process-sticky" class="sticky top-0 h-screen flex flex-col items-center overflow-hidden pt-26">
     <!-- Heading -->
     <div id="process-heading" class="text-center px-6 mb-6 transition-all duration-300">
-      <h2 class="text-3xl md:text-5xl font-bold text-grafite mb-4 font-space-grotesk">
+      <h2 data-flow-process-target class="process-flow-title relative z-10 text-3xl md:text-5xl font-bold text-grafite mb-4 font-space-grotesk">
         Nosso Processo de<br />
         <span class="text-ambar">Desenvolvimento</span>
       </h2>
@@ -83,7 +83,7 @@ const steps = [
 <section id="processo-mobile" class="md:hidden pt-16 pb-20 bg-areia">
   <div class="px-6">
     <div class="text-center mb-6">
-      <h2 class="text-3xl font-bold text-grafite mb-4 font-space-grotesk">
+      <h2 data-flow-process-target class="process-flow-title relative z-10 text-3xl font-bold text-grafite mb-4 font-space-grotesk">
         Nosso Processo de <span class="text-ambar">Desenvolvimento</span>
       </h2>
       <p class="text-chumbo text-lg max-w-2xl mx-auto">
@@ -237,6 +237,20 @@ const steps = [
 </script>
 
 <style>
+  .process-flow-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -0.65rem;
+    width: min(18rem, 72%);
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, #ff9810 28%, #FAC775 68%, transparent);
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.08);
+    transform-origin: center;
+  }
+
   .process-card {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
@@ -251,5 +265,57 @@ const steps = [
 
   .glow-dot-mobile {
     box-shadow: 0 0 12px rgba(239, 159, 39, 0.6);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.flow-story-ready) .process-flow-title {
+      animation: process-title-arrival var(--flow-cycle, 10.8s) ease-out infinite;
+      animation-delay: 5.75s;
+    }
+
+    :global(.flow-story-ready) .process-flow-title::after {
+      animation: process-title-line var(--flow-cycle, 10.8s) ease-out infinite;
+      animation-delay: 5.75s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-flow-title::after {
+      opacity: 0.42;
+      transform: translateX(-50%) scaleX(1);
+    }
+  }
+
+  @keyframes process-title-arrival {
+    0% {
+      text-shadow: 0 0 0 rgba(250, 199, 117, 0);
+    }
+    5% {
+      text-shadow: 0 0 18px rgba(250, 199, 117, 0.48);
+    }
+    12%,
+    100% {
+      text-shadow: 0 0 0 rgba(250, 199, 117, 0);
+    }
+  }
+
+  @keyframes process-title-line {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) scaleX(0.08);
+    }
+    5% {
+      opacity: 1;
+      transform: translateX(-50%) scaleX(1);
+    }
+    12% {
+      opacity: 0.35;
+      transform: translateX(-50%) scaleX(1);
+    }
+    18%,
+    100% {
+      opacity: 0;
+      transform: translateX(-50%) scaleX(1);
+    }
   }
 </style>

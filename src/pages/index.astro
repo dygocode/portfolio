@@ -4,6 +4,7 @@ import SEO from '../components/SEO.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Process from '../components/Process.astro';
+import FlowStory from '../components/FlowStory.astro';
 import Cases from '../components/Cases.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
@@ -16,8 +17,10 @@ const description = 'DYGO Sistemas Digitais - Transformamos ideias em soluções
   <SEO slot="head" title={title} description={description} />
   <main>
     <Hero />
-    <About />
-    <Process />
+    <FlowStory>
+      <About />
+      <Process />
+    </FlowStory>
     <Cases />
     <Contact />
     <Footer />

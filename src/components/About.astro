@@ -1,4 +1,5 @@
 ---
+const connectorIndexes = [1, 2, 3, 4, 5];
 ---
 
 <section id="sobre" class="py-20 bg-areia">
@@ -21,55 +22,282 @@
       </div>
 
       <!-- Cards de expertise -->
-      <div class="grid grid-cols-2 gap-4">
-        <div class="bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
+      <about-connections class="about-connections block relative">
+        <svg class="connection-layer absolute inset-0 w-full h-full pointer-events-none" data-connection-svg aria-hidden="true" focusable="false">
+          <defs>
+            {connectorIndexes.map((index) => (
+              <linearGradient id={`about-connector-gradient-${index}`} data-connector-gradient gradientUnits="userSpaceOnUse">
+                <stop stop-color="#ff9810"></stop>
+                <stop offset="0.52" stop-color="#FAC775"></stop>
+                <stop offset="1" stop-color="#ff9810"></stop>
+              </linearGradient>
+            ))}
+          </defs>
+          {connectorIndexes.map((index) => (
+            <g>
+              <path class="connector-base" data-connector-base fill="none" stroke={`url(#about-connector-gradient-${index})`}></path>
+              <path
+                class="connector-flow"
+                data-connector-flow
+                fill="none"
+                stroke={`url(#about-connector-gradient-${index})`}
+                pathLength="1"
+                style={`--segment-delay: ${(index - 1) * 0.68}s`}
+              ></path>
+            </g>
+          ))}
+        </svg>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-14 sm:gap-x-14 sm:gap-y-16">
+        <div data-expertise-card class="expertise-card relative z-10 bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
           <div class="w-10 h-10 bg-ambar/10 rounded-lg flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
           </div>
           <h3 class="font-bold text-grafite font-space-grotesk text-sm">ERP</h3>
           <p class="text-chumbo text-xs mt-1">Sistemas integrados de gestão</p>
         </div>
 
-        <div class="bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
+        <div data-expertise-card class="expertise-card relative z-10 bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
           <div class="w-10 h-10 bg-ambar/10 rounded-lg flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
           </div>
           <h3 class="font-bold text-grafite font-space-grotesk text-sm">LMS</h3>
           <p class="text-chumbo text-xs mt-1">Plataformas de ensino</p>
         </div>
 
-        <div class="bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
+        <div data-expertise-card class="expertise-card relative z-10 bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
           <div class="w-10 h-10 bg-ambar/10 rounded-lg flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
           </div>
           <h3 class="font-bold text-grafite font-space-grotesk text-sm">CRM</h3>
           <p class="text-chumbo text-xs mt-1">Gestão de relacionamento</p>
         </div>
 
-        <div class="bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
+        <div data-expertise-card class="expertise-card relative z-10 bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
           <div class="w-10 h-10 bg-ambar/10 rounded-lg flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
           </div>
           <h3 class="font-bold text-grafite font-space-grotesk text-sm">Integrações</h3>
           <p class="text-chumbo text-xs mt-1">Conexão entre sistemas</p>
         </div>
 
-        <div class="bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
+        <div data-expertise-card class="expertise-card relative z-10 bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
           <div class="w-10 h-10 bg-ambar/10 rounded-lg flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
           </div>
           <h3 class="font-bold text-grafite font-space-grotesk text-sm">Landing Pages</h3>
           <p class="text-chumbo text-xs mt-1">Páginas de conversão</p>
         </div>
 
-        <div class="bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
+        <div data-expertise-card class="expertise-card relative z-10 bg-white p-5 rounded-xl shadow-md border border-chumbo/10 hover:shadow-lg transition-shadow">
           <div class="w-10 h-10 bg-ambar/10 rounded-lg flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+            <svg class="w-5 h-5 text-ambar" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
           </div>
           <h3 class="font-bold text-grafite font-space-grotesk text-sm">Networking</h3>
           <p class="text-chumbo text-xs mt-1">Rede de desenvolvedores</p>
         </div>
-      </div>
+        </div>
+      </about-connections>
     </div>
   </div>
 </section>
+
+<script>
+  class AboutConnections extends HTMLElement {
+    private resizeObserver?: ResizeObserver;
+    private frameId?: number;
+    private cards: HTMLElement[] = [];
+    private basePaths: SVGPathElement[] = [];
+    private flowPaths: SVGPathElement[] = [];
+    private gradients: SVGLinearGradientElement[] = [];
+    private svg?: SVGSVGElement;
+
+    private scheduleDraw = () => {
+      if (this.frameId !== undefined) return;
+
+      this.frameId = requestAnimationFrame(() => {
+        this.frameId = undefined;
+        this.drawConnections();
+      });
+    };
+
+    connectedCallback() {
+      if (this.dataset.connectionsReady === 'true') return;
+
+      this.svg = this.querySelector<SVGSVGElement>('[data-connection-svg]') ?? undefined;
+      this.cards = Array.from(this.querySelectorAll<HTMLElement>('[data-expertise-card]'));
+      this.basePaths = Array.from(this.querySelectorAll<SVGPathElement>('[data-connector-base]'));
+      this.flowPaths = Array.from(this.querySelectorAll<SVGPathElement>('[data-connector-flow]'));
+      this.gradients = Array.from(this.querySelectorAll<SVGLinearGradientElement>('[data-connector-gradient]'));
+
+      const connectorCount = this.cards.length - 1;
+      if (
+        !this.svg ||
+        this.cards.length < 2 ||
+        this.basePaths.length < connectorCount ||
+        this.flowPaths.length < connectorCount ||
+        this.gradients.length < connectorCount
+      ) return;
+
+      this.dataset.connectionsReady = 'true';
+      this.resizeObserver = new ResizeObserver(this.scheduleDraw);
+      this.resizeObserver.observe(this);
+      this.cards.forEach((card) => this.resizeObserver?.observe(card));
+      window.addEventListener('resize', this.scheduleDraw, { passive: true });
+
+      document.fonts.ready.then(() => {
+        if (this.isConnected) this.scheduleDraw();
+      });
+
+      this.scheduleDraw();
+    }
+
+    disconnectedCallback() {
+      this.resizeObserver?.disconnect();
+      window.removeEventListener('resize', this.scheduleDraw);
+
+      if (this.frameId !== undefined) {
+        cancelAnimationFrame(this.frameId);
+        this.frameId = undefined;
+      }
+
+      delete this.dataset.connectionsReady;
+    }
+
+    private drawConnections() {
+      if (!this.svg) return;
+
+      const stageRect = this.getBoundingClientRect();
+      const width = this.clientWidth;
+      const height = this.clientHeight;
+
+      if (width === 0 || height === 0) return;
+
+      this.svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+      this.basePaths.forEach((basePath, index) => {
+        const current = this.cards[index];
+        const next = this.cards[index + 1];
+        const flowPath = this.flowPaths[index];
+        const gradient = this.gradients[index];
+
+        if (!current || !next || !flowPath || !gradient) {
+          basePath.removeAttribute('d');
+          flowPath?.removeAttribute('d');
+          return;
+        }
+
+        const currentRect = current.getBoundingClientRect();
+        const nextRect = next.getBoundingClientRect();
+        const sameRow = Math.abs(currentRect.top - nextRect.top) < 4;
+
+        if (sameRow) {
+          const startX = currentRect.right - stageRect.left;
+          const startY = currentRect.top + currentRect.height / 2 - stageRect.top;
+          const endX = nextRect.left - stageRect.left;
+          const endY = nextRect.top + nextRect.height / 2 - stageRect.top;
+          const controlOffset = Math.max((endX - startX) * 0.48, 8);
+
+          const pathData = `M ${startX} ${startY} C ${startX + controlOffset} ${startY}, ${endX - controlOffset} ${endY}, ${endX} ${endY}`;
+          basePath.setAttribute('d', pathData);
+          flowPath.setAttribute('d', pathData);
+          this.positionGradient(gradient, startX, startY, endX, endY);
+          return;
+        }
+
+        const startX = currentRect.left + currentRect.width / 2 - stageRect.left;
+        const startY = currentRect.bottom - stageRect.top;
+        const endX = nextRect.left + nextRect.width / 2 - stageRect.left;
+        const endY = nextRect.top - stageRect.top;
+        const middleY = startY + (endY - startY) / 2;
+
+        const pathData = `M ${startX} ${startY} C ${startX} ${middleY}, ${endX} ${middleY}, ${endX} ${endY}`;
+        basePath.setAttribute('d', pathData);
+        flowPath.setAttribute('d', pathData);
+        this.positionGradient(gradient, startX, startY, endX, endY);
+      });
+
+      this.classList.add('connections-visible');
+    }
+
+    private positionGradient(gradient: SVGLinearGradientElement, startX: number, startY: number, endX: number, endY: number) {
+      gradient.setAttribute('x1', String(startX));
+      gradient.setAttribute('y1', String(startY));
+      gradient.setAttribute('x2', String(endX));
+      gradient.setAttribute('y2', String(endY));
+    }
+  }
+
+  if (!customElements.get('about-connections')) {
+    customElements.define('about-connections', AboutConnections);
+  }
+</script>
+
+<style>
+  .about-connections {
+    isolation: isolate;
+  }
+
+  .connection-layer {
+    z-index: 0;
+    overflow: visible;
+    opacity: 0;
+  }
+
+  .connections-visible .connection-layer {
+    opacity: 1;
+  }
+
+  .connector-base,
+  .connector-flow {
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+  }
+
+  .connector-base {
+    stroke-width: 4.5;
+    opacity: 0.58;
+  }
+
+  .connector-flow {
+    stroke-width: 7;
+    stroke-dasharray: 0.16 1.16;
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.flow-story-ready) .connector-flow {
+      animation: connector-pass var(--flow-cycle, 10.8s) linear infinite;
+      animation-delay: calc(0.35s + var(--segment-delay, 0s));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .expertise-card {
+      transition-duration: 0.01ms;
+    }
+
+    .connector-flow {
+      display: none;
+    }
+  }
+
+  @keyframes connector-pass {
+    0% {
+      stroke-dashoffset: 0.18;
+      opacity: 0;
+    }
+    2% {
+      opacity: 1;
+    }
+    11% {
+      stroke-dashoffset: -1.04;
+      opacity: 1;
+    }
+    15%,
+    100% {
+      stroke-dashoffset: -1.04;
+      opacity: 0;
+    }
+  }
+</style>

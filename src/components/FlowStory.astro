@@ -1,0 +1,286 @@
+<flow-story class="flow-story block relative">
+  <svg
+    class="flow-arrow-layer absolute inset-0 w-full h-full pointer-events-none"
+    data-flow-arrow-svg
+    aria-hidden="true"
+    focusable="false"
+  >
+    <defs>
+      <linearGradient id="flow-arrow-gradient" data-flow-gradient gradientUnits="userSpaceOnUse">
+        <stop stop-color="#ff9810"></stop>
+        <stop offset="0.52" stop-color="#FAC775"></stop>
+        <stop offset="1" stop-color="#ff9810"></stop>
+      </linearGradient>
+    </defs>
+
+    <path class="flow-arrow-base" data-flow-arrow-base fill="none" stroke="url(#flow-arrow-gradient)"></path>
+    <path
+      class="flow-arrow-pass"
+      data-flow-arrow-pass
+      pathLength="1"
+      fill="none"
+      stroke="url(#flow-arrow-gradient)"
+    ></path>
+    <path
+      class="flow-arrow-chevron"
+      data-flow-arrow-chevron
+      fill="none"
+      stroke="url(#flow-arrow-gradient)"
+    ></path>
+  </svg>
+
+  <slot />
+</flow-story>
+
+<script>
+  type FlowPoint = { x: number; y: number };
+
+  class FlowStory extends HTMLElement {
+    private svg?: SVGSVGElement;
+    private resizeObserver?: ResizeObserver;
+    private frameId?: number;
+
+    private scheduleDraw = () => {
+      if (this.frameId !== undefined) return;
+
+      this.frameId = requestAnimationFrame(() => {
+        this.frameId = undefined;
+        this.drawArrow();
+      });
+    };
+
+    connectedCallback() {
+      if (this.dataset.flowStoryReady === 'true') return;
+
+      this.svg = this.querySelector<SVGSVGElement>('[data-flow-arrow-svg]') ?? undefined;
+      if (!this.svg) return;
+
+      this.dataset.flowStoryReady = 'true';
+      this.resizeObserver = new ResizeObserver(this.scheduleDraw);
+      this.resizeObserver.observe(this);
+      this.getObservedElements().forEach((element) => this.resizeObserver?.observe(element));
+
+      window.addEventListener('resize', this.scheduleDraw, { passive: true });
+      window.addEventListener('scroll', this.scheduleDraw, { passive: true });
+
+      document.fonts.ready.then(() => {
+        if (this.isConnected) this.scheduleDraw();
+      });
+
+      this.scheduleDraw();
+    }
+
+    disconnectedCallback() {
+      this.resizeObserver?.disconnect();
+      window.removeEventListener('resize', this.scheduleDraw);
+      window.removeEventListener('scroll', this.scheduleDraw);
+
+      if (this.frameId !== undefined) {
+        cancelAnimationFrame(this.frameId);
+        this.frameId = undefined;
+      }
+
+      delete this.dataset.flowStoryReady;
+    }
+
+    private getObservedElements() {
+      return Array.from(this.querySelectorAll<HTMLElement>('[data-expertise-card], [data-flow-process-target]'));
+    }
+
+    private getVisibleProcessTarget() {
+      return Array.from(this.querySelectorAll<HTMLElement>('[data-flow-process-target]')).find((target) => {
+        const rect = target.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+      });
+    }
+
+    private drawArrow() {
+      if (!this.svg) return;
+
+      const cards = Array.from(this.querySelectorAll<HTMLElement>('[data-expertise-card]'));
+      const lastCard = cards[cards.length - 1];
+      const processTarget = this.getVisibleProcessTarget();
+      const basePath = this.querySelector<SVGPathElement>('[data-flow-arrow-base]');
+      const passPath = this.querySelector<SVGPathElement>('[data-flow-arrow-pass]');
+      const chevron = this.querySelector<SVGPathElement>('[data-flow-arrow-chevron]');
+      const gradient = this.querySelector<SVGLinearGradientElement>('[data-flow-gradient]');
+
+      if (!lastCard || !processTarget || !basePath || !passPath || !chevron || !gradient) return;
+
+      const stageRect = this.getBoundingClientRect();
+      const width = this.clientWidth;
+      const height = this.scrollHeight;
+
+      if (width === 0 || height === 0) return;
+
+      this.svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+      const start = this.bottomCenter(lastCard, stageRect);
+      const targetRect = processTarget.getBoundingClientRect();
+      const end = {
+        x: targetRect.left + targetRect.width / 2 - stageRect.left,
+        y: targetRect.top - stageRect.top - 10
+      };
+      const deltaX = end.x - start.x;
+      const deltaY = end.y - start.y;
+      const lineLength = Math.hypot(deltaX, deltaY) || 1;
+      const directionX = deltaX / lineLength;
+      const directionY = deltaY / lineLength;
+      const normalX = -directionY;
+      const normalY = directionX;
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      const curveAmplitude = isMobile
+        ? Math.min(44, Math.max(28, lineLength * 0.045))
+        : Math.min(130, Math.max(72, lineLength * 0.13));
+      const exitLength = isMobile
+        ? Math.min(72, Math.max(44, Math.abs(deltaY) * 0.14))
+        : Math.min(120, Math.max(64, Math.abs(deltaY) * 0.22));
+      const middleX = start.x + deltaX * 0.5;
+      const middleY = start.y + deltaY * 0.5;
+      const firstControlX = start.x;
+      const firstControlY = start.y + Math.sign(deltaY || 1) * exitLength;
+      const secondControlX = start.x + deltaX * 0.34 + normalX * curveAmplitude;
+      const secondControlY = start.y + deltaY * 0.34 + normalY * curveAmplitude;
+      const thirdControlX = start.x + deltaX * 0.66 - normalX * curveAmplitude;
+      const thirdControlY = start.y + deltaY * 0.66 - normalY * curveAmplitude;
+      const fourthControlX = start.x + deltaX * 0.82;
+      const fourthControlY = start.y + deltaY * 0.82;
+      const bodyPath = [
+        `M ${start.x} ${start.y}`,
+        `C ${firstControlX} ${firstControlY}, ${secondControlX} ${secondControlY}, ${middleX} ${middleY}`,
+        `C ${thirdControlX} ${thirdControlY}, ${fourthControlX} ${fourthControlY}, ${end.x} ${end.y}`
+      ].join(' ');
+      const headLength = isMobile ? 15 : 18;
+      const headWidth = isMobile ? 8 : 10;
+      const headBaseX = end.x - directionX * headLength;
+      const headBaseY = end.y - directionY * headLength;
+      const perpendicularX = normalX * headWidth;
+      const perpendicularY = normalY * headWidth;
+      const chevronPath = [
+        `M ${headBaseX + perpendicularX} ${headBaseY + perpendicularY}`,
+        `L ${end.x} ${end.y}`,
+        `L ${headBaseX - perpendicularX} ${headBaseY - perpendicularY}`
+      ].join(' ');
+
+      basePath.setAttribute('d', bodyPath);
+      passPath.setAttribute('d', bodyPath);
+      chevron.setAttribute('d', chevronPath);
+      this.positionGradient(gradient, start, end);
+      this.classList.add('flow-story-ready');
+    }
+
+    private bottomCenter(element: HTMLElement, stageRect: DOMRect): FlowPoint {
+      const rect = element.getBoundingClientRect();
+
+      return {
+        x: rect.left + rect.width / 2 - stageRect.left,
+        y: rect.bottom - stageRect.top
+      };
+    }
+
+    private positionGradient(gradient: SVGLinearGradientElement, start: FlowPoint, end: FlowPoint) {
+      gradient.setAttribute('x1', String(start.x));
+      gradient.setAttribute('y1', String(start.y));
+      gradient.setAttribute('x2', String(end.x));
+      gradient.setAttribute('y2', String(end.y));
+    }
+  }
+
+  if (!customElements.get('flow-story')) {
+    customElements.define('flow-story', FlowStory);
+  }
+</script>
+
+<style>
+  .flow-story {
+    --flow-cycle: 10.8s;
+    isolation: isolate;
+  }
+
+  .flow-arrow-layer {
+    z-index: 5;
+    overflow: visible;
+    opacity: 0;
+  }
+
+  .flow-story-ready .flow-arrow-layer {
+    opacity: 1;
+  }
+
+  .flow-arrow-base,
+  .flow-arrow-pass,
+  .flow-arrow-chevron {
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .flow-arrow-base {
+    stroke-width: 4.5;
+    opacity: 0.5;
+  }
+
+  .flow-arrow-pass {
+    stroke-width: 7;
+    stroke-dasharray: 0.09 1.09;
+    opacity: 0;
+  }
+
+  .flow-arrow-chevron {
+    stroke-width: 5;
+    opacity: 0.82;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .flow-story-ready .flow-arrow-pass {
+      animation: arrow-pass var(--flow-cycle) linear infinite;
+      animation-delay: 4.45s;
+    }
+
+    .flow-story-ready .flow-arrow-chevron {
+      animation: chevron-arrival var(--flow-cycle) ease-out infinite;
+      animation-delay: 5.55s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flow-arrow-pass {
+      display: none;
+    }
+  }
+
+  @keyframes arrow-pass {
+    0% {
+      stroke-dashoffset: 0.1;
+      opacity: 0;
+    }
+    2% {
+      opacity: 1;
+    }
+    14% {
+      stroke-dashoffset: -1.02;
+      opacity: 1;
+    }
+    18%,
+    100% {
+      stroke-dashoffset: -1.02;
+      opacity: 0;
+    }
+  }
+
+  @keyframes chevron-arrival {
+    0% {
+      opacity: 0.58;
+      filter: drop-shadow(0 0 0 rgba(250, 199, 117, 0));
+    }
+    5% {
+      opacity: 1;
+      filter: drop-shadow(0 0 7px rgba(250, 199, 117, 0.72));
+    }
+    14%,
+    100% {
+      opacity: 0.82;
+      filter: drop-shadow(0 0 0 rgba(250, 199, 117, 0));
+    }
+  }
+</style>
