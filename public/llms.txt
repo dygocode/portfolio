@@ -1,0 +1,30 @@
+# DYGO Sistemas Digitais
+
+> A DYGO Sistemas Digitais é uma empresa brasileira de tecnologia que transforma ideias em soluções digitais sob medida, com especialização em desenvolvimento de software e consultoria.
+
+O site está em português do Brasil. A DYGO desenvolve sistemas sob medida, soluções ERP, LMS e CRM, integrações entre sistemas, landing pages, sell pages e projetos de transformação digital. Também oferece consultoria e suporte técnico para empresas que precisam organizar processos, centralizar dados e crescer com tecnologia.
+
+## Empresa
+
+- [Página inicial](https://dygosd.com.br/): Apresentação da DYGO Sistemas Digitais e de sua proposta de valor.
+- [Sobre a DYGO](https://dygosd.com.br/#sobre): Competências, tipos de sistemas e áreas de atuação.
+- [Processo de desenvolvimento](https://dygosd.com.br/#processo): Etapas de descoberta, planejamento, desenvolvimento, entrega e suporte.
+- [Cases e parceiros](https://dygosd.com.br/#cases): Projetos realizados e parceiros estratégicos.
+- [Contato](https://dygosd.com.br/#contato): Canal para solicitar orçamento, consultoria ou desenvolvimento de uma solução digital.
+
+## Conteúdo
+
+- [Blog da DYGO](https://dygosd.com.br/blog/): Artigos sobre tecnologia, gestão, automação, segurança, dados, processos e inteligência de negócio.
+- [Sitemap](https://dygosd.com.br/sitemap.xml): Relação canônica das páginas e dos artigos disponíveis no site.
+
+## Artigos introdutórios
+
+- [Por que ter uma Software House de confiança faz toda a diferença](https://dygosd.com.br/blog/por-que-uma-software-house-de-confianca-faz-diferenca/): Como uma parceria técnica confiável reduz riscos e apoia o crescimento do negócio.
+- [Métodos ágeis em projetos de Software: por que adotar?](https://dygosd.com.br/blog/metodos-ageis-em-projetos-de-software/): Benefícios da colaboração, das entregas incrementais e da adaptação contínua.
+- [Automação de processos com IA: o futuro já chegou](https://dygosd.com.br/blog/automacao-de-processos-com-ia/): Aplicações práticas de inteligência artificial na automação empresarial.
+- [Sistemas legados limitam crescimento?](https://dygosd.com.br/blog/sistemas-legados-limitam-crescimento/): Impactos de tecnologias antigas na operação e na capacidade de evolução das empresas.
+- [Como integrar bancos, ERPs e sistemas internos](https://dygosd.com.br/blog/como-integrar-bancos-erps-e-sistemas-internos/): Integração de dados e sistemas para reduzir retrabalho e melhorar o controle operacional.
+
+## Optional
+
+- [Política para rastreadores](https://dygosd.com.br/robots.txt): Regras públicas de rastreamento do site.
